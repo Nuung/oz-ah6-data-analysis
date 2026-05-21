@@ -1,0 +1,1001 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>헬스케어 데이터 분석 및 시각화 3일 과정</title>
+    <meta
+      name="description"
+      content="Python을 활용한 헬스케어 데이터 분석 및 시각화 3일 라이브 강의 개요 자료"
+    />
+    <style>
+      :root {
+        --accent: #e30613;
+        --bg: #f7f7f5;
+        --paper: #ffffff;
+        --text: #111111;
+        --muted: #4b4b4b;
+        --subtle: #777777;
+        --line: #d8d8d4;
+        --grid: rgb(17 17 17 / 4%);
+        --max: 1280px;
+        --slide-x: clamp(36px, 5.6vw, 80px);
+        --col-gap: clamp(20px, 2vw, 30px);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-snap-type: y proximity;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          "Pretendard", "Noto Sans KR", "Malgun Gothic", "Apple SD Gothic Neo",
+          sans-serif;
+        font-size: 18px;
+        line-height: 1.5;
+        letter-spacing: -0.015em;
+      }
+
+      a {
+        color: var(--text);
+        text-decoration-color: var(--accent);
+        text-decoration-thickness: 2px;
+        text-underline-offset: 0.18em;
+      }
+
+      a:focus-visible {
+        outline: 3px solid var(--accent);
+        outline-offset: 4px;
+      }
+
+      .deck {
+        width: min(var(--max), calc(100% - (var(--slide-x) * 2)));
+        margin-inline: auto;
+      }
+
+      .slide {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        align-content: start;
+        gap: var(--col-gap);
+        grid-auto-rows: min-content;
+        min-height: 100svh;
+        scroll-snap-align: start;
+        padding: clamp(72px, 8vw, 112px) 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .slide::before {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 calc(var(--slide-x) * -0.45);
+        width: 5px;
+        background: var(--accent);
+      }
+
+      .slide::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(to right, var(--grid) 1px, transparent 1px),
+          linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+        background-size: calc(100% / 12) 100%, 100% 72px;
+      }
+
+      .kicker,
+      .slide-no,
+      .tag,
+      .source-note,
+      .number,
+      th {
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        letter-spacing: 0.08em;
+      }
+
+      .slide-no {
+        position: absolute;
+        right: 0;
+        top: clamp(28px, 4vw, 48px);
+        color: var(--subtle);
+        font-size: 0.78rem;
+      }
+
+      .kicker {
+        grid-column: 1 / -1;
+        align-self: end;
+        color: var(--accent);
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p,
+      ul,
+      ol,
+      dl,
+      table {
+        position: relative;
+        z-index: 1;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        line-height: 1.06;
+        letter-spacing: -0.045em;
+        overflow-wrap: break-word;
+        word-break: keep-all;
+      }
+
+      h1 {
+        grid-column: 1 / 10;
+        max-width: 12ch;
+        font-size: clamp(3.2rem, 7.4vw, 7.2rem);
+      }
+
+      h2 {
+        grid-column: 1 / 10;
+        max-width: 13ch;
+        font-size: clamp(2.7rem, 5.2vw, 5.2rem);
+      }
+
+      h3 {
+        font-size: clamp(1.35rem, 2vw, 1.9rem);
+      }
+
+      p {
+        margin: 0;
+        word-break: keep-all;
+      }
+
+      .lead {
+        grid-column: 1 / 8;
+        max-width: 48ch;
+        color: var(--muted);
+        font-size: clamp(1.08rem, 1.35vw, 1.28rem);
+        line-height: 1.55;
+      }
+
+      .meta {
+        grid-column: 8 / -1;
+        align-self: end;
+        border-top: 4px solid var(--accent);
+        padding-top: 18px;
+      }
+
+      .meta dl {
+        display: grid;
+        gap: 14px;
+        margin: 0;
+      }
+
+      .meta dt {
+        color: var(--subtle);
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+
+      .meta dd {
+        margin: 0;
+        font-size: 1.08rem;
+        font-weight: 800;
+      }
+
+      .rule {
+        grid-column: 1 / -1;
+        height: 1px;
+        background: var(--line);
+      }
+
+      .slide h2 + .left,
+      .slide h2 + .wide,
+      .slide h2 + .matrix,
+      .slide h2 + .instructor-credentials,
+      .slide h2 + .flow-chart {
+        margin-top: clamp(18px, 2.2vw, 34px);
+      }
+
+      .wide {
+        grid-column: 1 / -1;
+      }
+
+      .left {
+        grid-column: 1 / 8;
+      }
+
+      .right {
+        grid-column: 8 / -1;
+      }
+
+      .big-statement {
+        grid-column: 1 / 10;
+        max-width: 24ch;
+        font-size: clamp(2rem, 3vw, 3.1rem);
+        font-weight: 800;
+        line-height: 1.18;
+        letter-spacing: -0.052em;
+      }
+
+      .caption {
+        color: var(--muted);
+        font-size: 1rem;
+      }
+
+      .strong-note {
+        border-top: 4px solid var(--accent);
+        color: var(--text);
+        font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+        font-weight: 800;
+        line-height: 1.34;
+        padding-top: 18px;
+      }
+
+      .support-note {
+        border-top: 1px solid var(--line);
+        margin-top: 18px;
+        padding-top: 14px;
+        color: var(--muted);
+        font-size: clamp(0.96rem, 1.12vw, 1.08rem);
+        line-height: 1.58;
+      }
+
+      .grid-4 {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        border-top: 3px solid var(--text);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .cell {
+        min-height: 190px;
+        border-right: 1px solid var(--line);
+        padding: 24px 22px;
+      }
+
+      .cell:last-child {
+        border-right: 0;
+      }
+
+      .cell strong {
+        display: block;
+        margin-bottom: 12px;
+        font-size: 1.08rem;
+        line-height: 1.25;
+      }
+
+      .cell p,
+      .cell li {
+        color: var(--muted);
+        font-size: 0.96rem;
+        line-height: 1.5;
+      }
+
+      .number {
+        display: block;
+        margin-bottom: 18px;
+        color: var(--accent);
+        font-size: 0.9rem;
+        font-weight: 700;
+      }
+
+      .line-list {
+        display: grid;
+        gap: 0;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border-top: 2px solid var(--text);
+      }
+
+      .line-list li {
+        display: grid;
+        grid-template-columns: minmax(120px, 0.26fr) minmax(0, 1fr);
+        gap: 20px;
+        padding: 18px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .tag {
+        color: var(--accent);
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .matrix {
+        grid-column: 1 / -1;
+        width: 100%;
+        border-collapse: collapse;
+        border-top: 2px solid var(--text);
+        font-size: 1rem;
+      }
+
+      .matrix th,
+      .matrix td {
+        border-bottom: 1px solid var(--line);
+        padding: 18px 16px 18px 0;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .matrix th {
+        color: var(--accent);
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .matrix td:first-child {
+        width: 23%;
+        color: var(--text);
+        font-weight: 800;
+      }
+
+      .matrix td:nth-child(2) {
+        width: 21%;
+        color: var(--muted);
+        font-weight: 700;
+      }
+
+      .matrix td:last-child {
+        color: var(--muted);
+      }
+
+      .case-matrix td:first-child {
+        width: 23%;
+      }
+
+      .case-matrix td:nth-child(2) {
+        width: 52%;
+        color: var(--muted);
+        font-weight: 600;
+      }
+
+      .case-matrix td:last-child {
+        width: 25%;
+        color: var(--text);
+        font-weight: 700;
+      }
+
+      .keyword-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 44px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .keyword-group {
+        border-top: 2px solid var(--text);
+        padding-top: 18px;
+      }
+
+      .keyword-group h3 {
+        margin-bottom: 16px;
+        color: var(--accent);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 0.82rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .keyword-group ul {
+        display: grid;
+        gap: 12px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .keyword-group li {
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 10px;
+        font-size: clamp(1.12rem, 1.7vw, 1.48rem);
+        font-weight: 800;
+        line-height: 1.2;
+      }
+
+      .flow-chart {
+        display: grid;
+        grid-column: 1 / -1;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        border-top: 3px solid var(--text);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .flow-step {
+        position: relative;
+        min-height: 230px;
+        border-right: 1px solid var(--line);
+        padding: 22px 18px 20px 0;
+      }
+
+      .flow-step:last-child {
+        border-right: 0;
+      }
+
+      .flow-step::after {
+        content: "";
+        position: absolute;
+        top: 29px;
+        right: 14px;
+        width: 24px;
+        height: 1px;
+        background: var(--accent);
+      }
+
+      .flow-step:last-child::after {
+        display: none;
+      }
+
+      .flow-step .number {
+        margin-bottom: 34px;
+      }
+
+      .flow-step strong {
+        display: block;
+        margin-bottom: 12px;
+        font-size: clamp(1.02rem, 1.28vw, 1.28rem);
+        line-height: 1.2;
+      }
+
+      .flow-step p {
+        color: var(--muted);
+        font-size: clamp(0.86rem, 0.94vw, 0.98rem);
+        line-height: 1.46;
+      }
+
+      .source-note {
+        grid-column: 1 / -1;
+        color: var(--subtle);
+        font-size: 0.78rem;
+      }
+
+      .instructor-credentials,
+      .instructor-note {
+        border-top: 2px solid var(--text);
+        padding-top: 18px;
+      }
+
+      .instructor-credentials {
+        display: grid;
+        align-content: start;
+        gap: 10px;
+        font-size: clamp(1rem, 1.22vw, 1.12rem);
+        font-weight: 700;
+        line-height: 1.62;
+      }
+
+      .instructor-credentials p {
+        margin: 0;
+      }
+
+      .instructor-credentials .career-list {
+        display: grid;
+        align-content: start;
+        gap: 5px;
+        margin-top: clamp(14px, 2vw, 26px);
+      }
+
+      .instructor-note {
+        display: grid;
+        align-content: start;
+        gap: 20px;
+        color: var(--muted);
+        font-size: clamp(0.96rem, 1.08vw, 1.03rem);
+        line-height: 1.66;
+      }
+
+      .instructor-note h3 {
+        margin: 0 0 8px;
+        color: var(--text);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 0.82rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .instructor-note p {
+        margin: 0;
+      }
+
+      .sources {
+        margin: 0;
+        padding-left: 1.1rem;
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.45;
+      }
+
+      .sources li {
+        margin: 0 0 0.7rem;
+      }
+
+      @media (max-width: 860px) {
+        html {
+          scroll-snap-type: none;
+        }
+
+        .deck {
+          width: min(100% - 40px, var(--max));
+        }
+
+        .slide {
+          display: block;
+          min-height: auto;
+          padding: 60px 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .slide::before {
+          inset: 0 auto 0 -16px;
+          width: 4px;
+        }
+
+        .slide > * + * {
+          margin-top: 24px;
+        }
+
+        h1,
+        h2,
+        .lead,
+        .meta,
+        .left,
+        .right,
+        .big-statement {
+          max-width: none;
+        }
+
+        .grid-4,
+        .keyword-grid,
+        .flow-chart {
+          grid-template-columns: 1fr;
+        }
+
+        .cell,
+        .flow-step {
+          min-height: auto;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .cell:last-child,
+        .flow-step:last-child {
+          border-bottom: 0;
+        }
+
+        .line-list li {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+
+        .matrix,
+        .matrix thead,
+        .matrix tbody,
+        .matrix tr,
+        .matrix th,
+        .matrix td {
+          display: block;
+          width: 100% !important;
+        }
+
+        .matrix {
+          font-size: 0.95rem;
+        }
+
+        .matrix thead {
+          display: none;
+        }
+
+        .matrix tr {
+          border-bottom: 1px solid var(--line);
+          padding: 14px 0;
+        }
+
+        .matrix td {
+          border-bottom: 0;
+          padding: 5px 0;
+        }
+
+        .matrix td:first-child {
+          font-weight: 800;
+        }
+
+        .matrix td:nth-child(2),
+        .matrix td:nth-child(3) {
+          color: var(--muted);
+        }
+      }
+
+      @media print {
+        html {
+          scroll-snap-type: none;
+        }
+
+        body {
+          background: white;
+        }
+
+        .slide {
+          min-height: 100vh;
+          break-after: page;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="deck" aria-label="3일 과정 개요 슬라이드">
+      <section class="slide" aria-labelledby="s01-title">
+        <div class="slide-no">01 / 12</div>
+        <p class="kicker">course overview</p>
+        <h1 id="s01-title">헬스케어 데이터 분석과 시각화</h1>
+        <p class="lead">
+          Python으로 의료 데이터를 읽고, 정리하고, 시각화한다.
+        </p>
+        <aside class="meta" aria-label="과정 정보">
+          <dl>
+            <div>
+              <dt>라이브 세션</dt>
+              <dd>3일 · 10:00–15:00 KST</dd>
+            </div>
+            <div>
+              <dt>수업 방식</dt>
+              <dd>짧게 설명하고 바로 실습</dd>
+            </div>
+            <div>
+              <dt>도구</dt>
+              <dd>Python, pandas, Matplotlib, seaborn</dd>
+            </div>
+          </dl>
+        </aside>
+      </section>
+
+      <section class="slide" aria-labelledby="s02-instructor-title">
+        <div class="slide-no">02 / 12</div>
+        <p class="kicker">instructor note</p>
+        <h2 id="s02-instructor-title">정현우</h2>
+        <div class="left instructor-credentials" aria-label="강사 소개">
+          <p>3번 시드 투자, 3번의 팁스 경험</p>
+          <div class="career-list">
+            <p>現 오토웍스(otoworks) 대표</p>
+            <p>- AI Agent, AI RPA(업무자동화), 온톨로지 전문 <a href="https://otoworks.ai/">https://otoworks.ai/</a></p>
+            <p>前 서치라이트AI – 공동 창업자 &amp; CTO</p>
+            <p>前 얼리페이(EarlyPay) – Tech Leader</p>
+            <p>前 마켓오브메테리얼 – Founding Member &amp; Tech Leader</p>
+            <p>前 롯데이노베이트 / 롯데카드 – 개발자</p>
+          </div>
+        </div>
+        <div class="right instructor-note">
+          <section aria-labelledby="instructor-current-work">
+            <h3 id="instructor-current-work">요즘 제일 많이 하는 데이터 분석?</h3>
+            <p>
+              LLM에게 "지식도서관"을 만들어 주는 일이다. 여기서 지식도서관은 단순히
+              문서를 쌓아두는 폴더가 아니다. RAG로 검색해 붙일 수도 있고, 그래프로 관계를
+              표현할 수도 있고, 더 크게 보면 온톨로지처럼 개념과 관계를 정리할 수도 있다.
+              어떤 형태를 쓰든 먼저 봐야 하는 것은 데이터의 구조다. 정형 데이터와 비정형
+              데이터가 각각 무엇을 담고 있는지, 서로 겹치거나 빠지는 영역은 없는지,
+              MECE(Mutually Exclusive, Collectively Exhaustive)하게 나눌 수 있는지 확인해야 한다.
+            </p>
+          </section>
+          <section aria-labelledby="instructor-memorable-work">
+            <h3 id="instructor-memorable-work">기억에 남는 데이터 분석</h3>
+            <p>
+              오프라인 소상공인 대상 선정산 서비스와 FDS 구축이 기억에 남는다. 선정산은
+              카드 결제 후 결제 대금이 언제 가게에 돌아오는지 계산하고, 그 시점을 앞당기는
+              서비스다. FDS는 이상거래탐지(Fraud Detection System)다. 당시 만든 FDS가
+              완벽한 시스템이었다는 뜻은 아니다. 그래도 리뷰 데이터, 결제 데이터, 신용 정보
+              등을 함께 보고 회사 내부에서 고객을 평가하는 기준을 만들었다. 결과적으로
+              대안신용평가 등급에 가까운 내부 점수를 만든 경험이었다.
+            </p>
+          </section>
+        </div>
+      </section>
+
+      <section class="slide" aria-labelledby="s02-title">
+        <div class="slide-no">03 / 12</div>
+        <p class="kicker">why this course</p>
+        <h2 id="s02-title">분석은 그래프보다 먼저다</h2>
+        <p class="big-statement">
+          먼저 표를 이해한다. 그다음 값을 의심한다. 마지막에 그래프로 설명한다.
+        </p>
+        <div class="rule"></div>
+        <p class="lead">
+          수업은 수집, 탐색, 정제, 시각화 순서로 진행된다.<br />
+          vscode와 (쥬피터)노트북으로 실습 진행!
+        </p>
+      </section>
+
+      <section class="slide" aria-labelledby="s-gigo-title">
+        <div class="slide-no">04 / 12</div>
+        <p class="kicker">garbage in garbage out</p>
+        <h2 id="s-gigo-title">AI도 쓰레기 데이터는 못 구한다</h2>
+        <p class="big-statement">
+          Garbage in, garbage out. 앞으로 모델링과 AI를 배울수록 이 말이 더 세게 돌아온다.
+        </p>
+        <div class="left">
+          <ul class="line-list">
+            <li>
+              <span class="tag">type</span>
+              <span>병실 번호나 환자 ID를 숫자라고 평균 내면, 그 순간 분석은 틀어진다.</span>
+            </li>
+            <li>
+              <span class="tag">missing</span>
+              <span>응답하지 못한 사람을 0으로 채우면, 모델은 그 0을 진짜 상태로 배운다.</span>
+            </li>
+            <li>
+              <span class="tag">label</span>
+              <span>당뇨, 고혈압, 흡연 같은 기준이 데이터마다 다르면 비교가 어렵다.</span>
+            </li>
+          </ul>
+        </div>
+        <div class="right">
+          <p class="caption strong-note">
+            그래서 이 수업은 모델 이전의 일을 먼저 한다. 표를 읽고, 값을 의심하고,
+            그래프가 거짓말하지 않는지 확인한다.
+          </p>
+        </div>
+      </section>
+
+      <section class="slide" aria-labelledby="s03-title">
+        <div class="slide-no">05 / 12</div>
+        <p class="kicker">whole structure</p>
+        <h2 id="s03-title">전체 구조</h2>
+        <div class="wide grid-4" role="list" aria-label="데이터 분석 과정">
+          <article class="cell" role="listitem">
+            <span class="number">01</span>
+            <strong>불러오기</strong>
+            <p>CSV, 공개 데이터, 예제 데이터를 읽고 출처를 남긴다.</p>
+          </article>
+          <article class="cell" role="listitem">
+            <span class="number">02</span>
+            <strong>살펴보기</strong>
+            <p>행 수, 컬럼, 타입, 결측치, 분포를 확인한다.</p>
+          </article>
+          <article class="cell" role="listitem">
+            <span class="number">03</span>
+            <strong>고치기</strong>
+            <p>중복, 결측, 이상치, 타입 문제를 정리한다.</p>
+          </article>
+          <article class="cell" role="listitem">
+            <span class="number">04</span>
+            <strong>설명하기</strong>
+            <p>분포, 비교, 관계를 그래프로 해석한다.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="slide" aria-labelledby="s04-title">
+        <div class="slide-no">06 / 12</div>
+        <p class="kicker">day 1</p>
+        <h2 id="s04-title">1일차. 데이터 타입과 pandas</h2>
+        <div class="left">
+          <ul class="line-list">
+            <li>
+              <span class="tag">topic</span>
+              <span>숫자형, 범주형, 연속형, 이산형, 명목형, 순서형</span>
+            </li>
+            <li>
+              <span class="tag">practice</span>
+              <span>Series와 DataFrame을 만들고, 필요한 행과 열을 선택한다.</span>
+            </li>
+            <li>
+              <span class="tag">point</span>
+              <span>병실 번호처럼 숫자로 보여도 평균을 내면 안 되는 컬럼을 구분한다.</span>
+            </li>
+          </ul>
+        </div>
+        <div class="right">
+          <p class="caption strong-note">핵심 기준: 숫자로 보여도 항상 수치형은 아니다.</p>
+        </div>
+      </section>
+
+      <section class="slide" aria-labelledby="s05-title">
+        <div class="slide-no">07 / 12</div>
+        <p class="kicker">day 2</p>
+        <h2 id="s05-title">2일차. EDA</h2>
+        <div class="left">
+          <ul class="line-list">
+            <li>
+              <span class="tag">topic</span>
+              <span>데이터 크기, 컬럼 설명, 기술통계, 빈도, 그룹별 차이</span>
+            </li>
+            <li>
+              <span class="tag">practice</span>
+              <span>당뇨병 건강지표 데이터를 불러와 분포와 차이를 확인한다.</span>
+            </li>
+            <li>
+              <span class="tag">point</span>
+              <span>EDA는 결론이 아니라 더 확인할 지점을 찾는 과정이다.</span>
+            </li>
+          </ul>
+        </div>
+        <div class="right">
+          <p class="caption strong-note">핵심 기준: 평균 하나만 보고 끝내지 않는다.</p>
+          <p class="support-note">
+            EDA(탐색적 데이터 분석, Exploratory Data Analysis)는 수집한 데이터를 여러 각도에서
+            시각화하고 통계적으로 살펴보며, 특징과 구조, 패턴, 이상치(outlier)를 초기에 파악하는 단계다.
+          </p>
+        </div>
+      </section>
+
+      <section class="slide" aria-labelledby="s06-title">
+        <div class="slide-no">08 / 12</div>
+        <p class="kicker">day 3</p>
+        <h2 id="s06-title">3일차. 전처리와 시각화</h2>
+        <div class="left">
+          <ul class="line-list">
+            <li>
+              <span class="tag">topic</span>
+              <span>결측치, 중복, 이상치, 타입 변환, Matplotlib, seaborn</span>
+            </li>
+            <li>
+              <span class="tag">practice</span>
+              <span>문제가 있는 환자 데이터를 정리하고, 차트로 결과를 설명한다.</span>
+            </li>
+            <li>
+              <span class="tag">point</span>
+              <span>어떤 값을 고쳤고 왜 그렇게 처리했는지 말할 수 있어야 한다.</span>
+            </li>
+          </ul>
+        </div>
+        <div class="right">
+          <p class="caption strong-note">핵심 기준: 그래프는 장식이 아니라 판단 근거다.</p>
+        </div>
+      </section>
+
+      <section class="slide" aria-labelledby="s07-title">
+        <div class="slide-no">09 / 12</div>
+        <p class="kicker">medical data cases</p>
+        <h2 id="s07-title">의료데이터 분석 사례</h2>
+        <table class="matrix case-matrix" aria-label="의료데이터 분석 사례 비교">
+          <thead>
+            <tr>
+              <th>case</th>
+              <th>why it matters</th>
+              <th>watch or open</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>동네마다 건강이 다른가</td>
+              <td>CDC PLACES는 흡연, 당뇨, 예방검진 같은 지표를 카운티, 도시, 우편번호 단위로 보여준다. "우리 동네는 왜 다를까"부터 시작하기 좋다.</td>
+              <td><a href="https://www.cdc.gov/places/tools/explore-places-data-portal.html">PLACES 포털 가이드</a></td>
+            </tr>
+            <tr>
+              <td>내가 먹는 약은 계속 안전한가</td>
+              <td>FDA Sentinel은 진료, 보험청구, 처방 데이터를 이용해 약과 백신의 이상 신호를 본다. 병원 안의 기록이 사회 전체 안전망으로 바뀌는 사례다.</td>
+              <td><a href="https://www.fda.gov/safety/fdas-sentinel-initiative">FDA Sentinel 영상</a></td>
+            </tr>
+            <tr>
+              <td>확진자 숫자는 어떻게 지도와 그래프가 됐나</td>
+              <td>Johns Hopkins COVID-19 대시보드는 공개 데이터를 모아 사람들이 매일 보는 지도로 만들었다. 동시에 누락, 지연, 집계 기준 문제가 얼마나 무서운지도 보여준다.</td>
+              <td><a href="https://coronavirus.jhu.edu/covid-19-daily-video">JHU Data in Motion</a></td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="source-note">
+          여기서 볼 것은 멋진 대시보드가 아니다. 데이터 단위, 빠진 값, 집계 기준이 판단을 어떻게 바꾸는지다.
+        </p>
+      </section>
+
+      <section class="slide" aria-labelledby="s09-video-title">
+        <div class="slide-no">10 / 12</div>
+        <p class="kicker">video references</p>
+        <h2 id="s09-video-title">같이 보면 좋은 영상</h2>
+        <table class="matrix" aria-label="영상 자료">
+          <thead>
+            <tr>
+              <th>video</th>
+              <th>why</th>
+              <th>how to watch</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="https://youtu.be/xRq4c4oWcjo?si=DKO7kD1hla8aNSka">스브스뉴스: 데이터 활용 트렌드</a></td>
+              <td>구매 데이터와 SNS 데이터가 상품 기획, 콘텐츠 추천, 고객 혜택 설계에 쓰이는 장면을 보여준다.</td>
+              <td>무엇을 기록했고, 어떤 기준으로 묶었는지만 본다.</td>
+            </tr>
+            <tr>
+              <td><a href="https://youtu.be/MnyUFuc8u_0?si=hcWdORk3syDbeOU8">토크아이티: 생성형 AI와 데이터 사이언티스트</a></td>
+              <td>AI가 분석가의 일을 없애는지보다, 분석가가 AI와 어떻게 일해야 하는지를 다룬다.</td>
+              <td>AI가 있어도 질문, 의심, 검증은 사람이 해야 한다는 관점으로 본다.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="slide" aria-labelledby="s08-title">
+        <div class="slide-no">11 / 12</div>
+        <p class="kicker">keywords</p>
+        <h2 id="s08-title">수업에서 자주 볼 키워드</h2>
+        <div class="wide keyword-grid" aria-label="핵심 키워드">
+          <section class="keyword-group" aria-labelledby="kw-data">
+            <h3 id="kw-data">data reading</h3>
+            <ul>
+              <li>데이터 타입</li>
+              <li>숫자형 / 범주형</li>
+              <li>행과 열</li>
+              <li>DataFrame</li>
+            </ul>
+          </section>
+          <section class="keyword-group" aria-labelledby="kw-check">
+            <h3 id="kw-check">data check</h3>
+            <ul>
+              <li>결측치</li>
+              <li>중복</li>
+              <li>이상치</li>
+              <li>기술통계</li>
+            </ul>
+          </section>
+          <section class="keyword-group" aria-labelledby="kw-explain">
+            <h3 id="kw-explain">data story</h3>
+            <ul>
+              <li>분포</li>
+              <li>그룹 비교</li>
+              <li>상관</li>
+              <li>시각화 해석</li>
+            </ul>
+          </section>
+        </div>
+      </section>
+
+      <section class="slide" aria-labelledby="s10-title">
+        <div class="slide-no">12 / 12</div>
+        <p class="kicker">work flow</p>
+        <h2 id="s10-title">실무 데이터 분석 흐름</h2>
+        <div class="flow-chart" aria-label="실무 데이터 분석 흐름도">
+          <article class="flow-step">
+            <span class="number">01</span>
+            <strong>문제 정의</strong>
+            <p>무엇을 결정하려는지 먼저 적는다. 지표와 기준도 여기서 정한다.</p>
+          </article>
+          <article class="flow-step">
+            <span class="number">02</span>
+            <strong>데이터 확인</strong>
+            <p>출처, 행과 열, 타입, 기간, 누락된 값을 본다. 바로 모델로 가지 않는다.</p>
+          </article>
+          <article class="flow-step">
+            <span class="number">03</span>
+            <strong>정제</strong>
+            <p>결측, 중복, 이상치, 단위, 라벨 기준을 맞춘다. 처리 이유를 남긴다.</p>
+          </article>
+          <article class="flow-step">
+            <span class="number">04</span>
+            <strong>EDA</strong>
+            <p>분포, 비교, 관계를 확인한다. 이상한 값은 원인부터 다시 본다.</p>
+          </article>
+          <article class="flow-step">
+            <span class="number">05</span>
+            <strong>분석 또는 모델링</strong>
+            <p>필요할 때만 모델을 쓴다. 단순 집계로 충분하면 거기서 멈춘다.</p>
+          </article>
+          <article class="flow-step">
+            <span class="number">06</span>
+            <strong>검증과 공유</strong>
+            <p>결과가 업무 판단에 쓰일 수 있는지 확인한다. 안 맞으면 앞 단계로 돌아간다.</p>
+          </article>
+        </div>
+        <p class="source-note">실무에서는 직선으로 끝나지 않는다. 검증에서 막히면 데이터 확인이나 정제로 되돌아간다.</p>
+      </section>
+
+
+    </main>
+  </body>
+</html>

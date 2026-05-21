@@ -40,6 +40,8 @@ resources/
 - Put PDF handouts and references under `resources/documents/`.
 - Put presentation files under `resources/slides/`.
 - Keep the repository root limited to project configuration and top-level documentation.
+- Keep only final notebook names in active course folders; do not keep `v1`/`v2` draft suffixes there.
+- If draft or historical variants are needed later, put them under an explicit archive folder.
 
 ## Python Version & Typing
 
