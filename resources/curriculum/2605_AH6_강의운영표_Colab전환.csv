@@ -1,0 +1,81 @@
+﻿회차 (일),주제,목차,세부내용,강의 교안,강의 실습 코드,실습 과제 내용,실습 과제 코드,기타 (메모)
+1,데이터 타입의 이해,"숫자형/범주형 데이터
+연속형·이산형 데이터
+순서형·명목형 데이터
+타입별 분석/시각화 방법","의료 데이터 컬럼을 분석 전에 먼저 분류하는 연습을 한다. 혈압, 혈당, 나이, 성별, 진료과 같은 예시로 평균을 낼 수 있는 값과 빈도로 봐야 하는 값을 구분한다. 이후 Pandas 실습과 시각화 수업에서 어떤 분석 방법을 선택할지 판단하는 기준을 만든다.","resources/slides/데이터 분석 시작하기.pptx
+resources/documents/데이터 분석 시작하기.pdf",course/day01/notebooks/1일차_데이터 타입의 이해.ipynb,"1일차 Pandas 과제의 사전 개념. 혈압·혈당·나이·성별·진료과 컬럼을 구분한 뒤 조회, 필터링, 빈도 계산으로 연결한다.",course/day01/assignments/1일차_Pandas기초와실습_실습과제.ipynb,비전공자에게는 용어보다 예시 중심으로 설명. “숫자라고 모두 같은 숫자가 아니다”를 강조.
+1,Pandas 기본 구조,"Pandas 개요
+Series와 DataFrame
+DataFrame 생성
+CSV 저장/불러오기
+head/info/shape/dtypes 확인","Pandas를 표 데이터를 다루는 도구로 소개하고, 딕셔너리 데이터로 환자 DataFrame을 만든다. Series와 DataFrame 차이, 컬럼/인덱스 개념, CSV 입출력, 데이터 크기와 타입 확인 방법을 다룬다.","resources/slides/데이터 분석 시작하기.pptx
+resources/documents/데이터 분석 시작하기.pdf","course/day01/notebooks/1일차_Pandas기초와실습.ipynb
+섹션: Pandas란 무엇인가? ~ 데이터 탐색 및 구조 속성 파악","환자 정보 DataFrame 생성, 환자ID 인덱스 설정, 환자 수와 컬럼 수 확인.",course/day01/assignments/1일차_Pandas기초와실습_실습과제.ipynb,Colab 기준 파일 경로 설명이 필요. CSV 입출력은 시간이 부족하면 시연 위주로 축소 가능.
+1,Pandas 조회와 필터링,"컬럼 선택
+loc/iloc
+조건부 필터링
+복합 조건
+value_counts 기본 집계","필요한 행과 열을 선택하고 조건에 맞는 환자만 추출한다. P003 환자 조회, 첫 번째/세 번째 환자 조회, 나이·혈압 컬럼 선택, 고혈압/고령/내과+고혈당 조건 필터링을 실습한다.","resources/slides/데이터 분석 시작하기.pptx
+resources/documents/데이터 분석 시작하기.pdf","course/day01/notebooks/1일차_Pandas기초와실습.ipynb
+섹션: Pandas의 인덱싱과 슬라이싱 ~ 조건부 필터링","loc/iloc 조회, 혈압 ≥ 140, 나이 ≥ 65, 진료과 == 내과 AND 혈당 ≥ 120 조건 필터링, 진료과/성별 분포 확인.",course/day01/assignments/1일차_Pandas기초와실습_실습과제.ipynb,"초심자 핵심 구간. loc/iloc와 &, 괄호 문법은 천천히 반복 설명."
+1,DataFrame 조작,"컬럼 추가/수정
+조건부 컬럼 생성
+행 추가와 값 수정
+컬럼/행 삭제
+inplace와 원본 보호","기존 데이터에서 새 컬럼을 만들고 일부 값을 수정하거나 삭제하는 방법을 다룬다. 고위험군, 고령환자, 위험도등급 같은 교육용 파생 변수를 만들며 원본을 바로 바꾸는 것과 복사본을 쓰는 차이를 설명한다.","resources/slides/데이터 분석 시작하기.pptx
+resources/documents/데이터 분석 시작하기.pdf","course/day01/notebooks/1일차_Pandas기초와실습.ipynb
+섹션: DataFrame 데이터 조작","고혈압이면 고위험, 아니면 정상으로 위험도 등급 컬럼 생성 후 위험도별 분포 확인.",course/day01/assignments/1일차_Pandas기초와실습_실습과제.ipynb,분량이 많으면 행/컬럼 삭제는 심화로 빼도 됨. “고위험”은 교육용 라벨임을 안내.
+2,EDA 개요와 데이터 로딩,"EDA 목적
+라이브러리/한글 폰트 세팅
+BRFSS 2015 당뇨병 건강지표 데이터 로딩
+기본 정보 확인","탐색적 데이터 분석을 “데이터를 이해하기 위한 첫 점검 과정”으로 소개한다. BRFSS 기반 당뇨병 건강지표 데이터를 불러오고, 행/열 크기, 컬럼, 데이터 타입, 앞부분 데이터를 확인한다.","resources/slides/데이터 분석 시작하기.pptx
+resources/documents/데이터 분석 시작하기.pdf","course/day02/notebooks/2일차_탐색적_데이터분석(EDA).ipynb
+섹션: EDA란? ~ 기본 데이터 정보 확인",과제에서도 같은 데이터셋을 불러온 뒤 기본 정보를 확인하고 분석을 시작한다.,course/day02/assignments/2일차_탐색적_데이터분석(EDA)_실습문제.ipynb,kagglehub 의존성이 있어 수업 전 실행 확인 필요. 실패 대비용 CSV가 있으면 안전.
+2,기술통계와 분포 이해,"describe
+평균·중앙값·최빈값
+표준편차
+IQR
+숫자형 변수 해석","BMI, Age, PhysHlth 등 숫자형 변수의 중심과 퍼짐을 확인한다. 평균과 중앙값의 차이, 표준편차와 IQR의 의미를 설명하고, 숫자 요약을 보고 데이터 범위와 이상 가능성을 읽는 연습을 한다.","resources/slides/데이터 분석 시작하기.pptx
+resources/documents/데이터 분석 시작하기.pdf","course/day02/notebooks/2일차_탐색적_데이터분석(EDA).ipynb
+섹션: 기술통계 분석","당뇨병 여부별 BMI와 나이의 평균, 표준편차 계산. 당뇨병 여부별 BMI 평균 차이 계산.",course/day02/assignments/2일차_탐색적_데이터분석(EDA)_실습문제.ipynb,수식보다 해석 중심. IQR은 3일차 이상치 처리와 연결.
+2,범주형 변수 분석,"value_counts
+빈도와 비율
+성별 분포
+교육수준 분포","Sex, Education 같은 범주형 변수에서 값별 개수와 비율을 계산한다. 절대빈도와 상대빈도를 비교하며, 범주형 데이터는 평균보다 빈도/비율로 보는 것이 자연스럽다는 점을 다룬다.","resources/slides/데이터 분석 시작하기.pptx
+resources/documents/데이터 분석 시작하기.pdf","course/day02/notebooks/2일차_탐색적_데이터분석(EDA).ipynb
+섹션: 빈도분석","성별 분포를 빈도와 비율로 확인하고, 교육 수준 분포를 분석한다.",course/day02/assignments/2일차_탐색적_데이터분석(EDA)_실습문제.ipynb,Day 1 데이터 타입 구분과 직접 연결.
+2,그룹별 분석과 교차분석,"groupby/agg
+pd.crosstab
+행별 비율 교차표
+고혈압과 당뇨병 패턴 확인
+상관관계 개념 소개","당뇨병 여부별 BMI/나이 통계를 groupby로 비교하고, 고혈압과 당뇨병 여부의 조합을 교차표로 확인한다. 상관관계는 변수 간 관계를 살펴보는 보조 개념으로 소개하되 인과로 해석하지 않도록 지도한다.","resources/slides/데이터 분석 시작하기.pptx
+resources/documents/데이터 분석 시작하기.pdf","course/day02/notebooks/2일차_탐색적_데이터분석(EDA).ipynb
+섹션: 교차분석 ~ 그룹별 분석 ~ 상관관계 분석","고혈압과 당뇨병 교차표, 비율 기반 교차표 작성. 그룹별 BMI/나이 통계 계산.",course/day02/assignments/2일차_탐색적_데이터분석(EDA)_실습문제.ipynb,groupby는 초심자 난점. 한 컬럼 평균 → 여러 통계량 순서로 진행.
+3,데이터 전처리 개요와 결측치 처리,"전처리 로드맵
+결측치 탐지
+dropna/fillna
+평균·중앙값 대체
+앞/뒤 값 채우기","분석 전에 데이터를 정리해야 하는 이유를 설명하고, Age, BMI, BloodPressure, Cholesterol 같은 컬럼의 결측치를 찾는다. 평균/중앙값 대체 등 대표 처리 방법을 비교한다.","resources/slides/데이터 분석 시작하기.pptx
+resources/documents/데이터 분석 시작하기.pdf","course/day03/notebooks/3일차_데이터전처리.ipynb
+섹션: 데이터 전처리 ~ 결측치 탐지 및 처리","Age 평균 대체, BMI 중앙값 대체, BloodPressure 평균 대체, Cholesterol 중앙값 대체.",course/day03/assignments/3일차_데이터전처리_실습과제.ipynb,"None, NaN, 문자열 NULL 차이를 짚어야 함."
+3,중복·이상치·타입 오류 처리,"중복 데이터 탐지/제거
+PatientID 기준 최신 데이터 유지
+IQR 이상치 탐지
+BloodPressure 이상치 대체
+숫자형/날짜형 변환","PatientID 기준 중복을 찾고 keep=""last""로 최신 검사 데이터를 남긴다. BloodPressure 400 같은 이상치를 IQR로 탐지하고 중앙값으로 대체한다. 문자열 BMI와 ExamDate를 분석 가능한 타입으로 변환한다.","resources/slides/데이터 분석 시작하기.pptx
+resources/documents/데이터 분석 시작하기.pdf","course/day03/notebooks/3일차_데이터전처리.ipynb
+섹션: 중복 데이터 ~ 이상치 ~ 데이터 타입 확인 및 변환","PatientID 중복 제거, BloodPressure IQR 이상치 처리, BMI 숫자 변환, ExamDate datetime 변환.",course/day03/assignments/3일차_데이터전처리_실습과제.ipynb,의도된 에러 셀은 “실패 예시”로 설명 필요. 이상치는 무조건 삭제/대체가 정답은 아님.
+3,Matplotlib 기본 시각화,"Matplotlib vs Seaborn
+한글 폰트 세팅
+선 그래프
+막대 차트
+제목·축 라벨·단위","Matplotlib와 Seaborn의 역할을 비교하고, 치료 일수별 혈압 변화나 신생아 체중 변화처럼 순서가 있는 데이터를 선 그래프로 표현한다. 범주별 비교에는 막대 차트를 사용하고 제목, 축 이름, 단위를 붙이는 습관을 만든다.","resources/slides/데이터 분석 시작하기.pptx
+resources/documents/데이터 분석 시작하기.pdf","course/day03/notebooks/3일차_데이터시각화.ipynb
+섹션: Matplotlib vs Seaborn ~ 막대 차트","수업 중 실습: 신생아 성장 모니터링 선 그래프 작성, 제목과 축 라벨 추가.",course/day03/notebooks/3일차_데이터시각화.ipynb,별도 과제 파일은 없음. Colab 한글 폰트 깨짐 가능성 안내.
+3,Seaborn 통계 시각화와 해석,"countplot
+histplot + hue
+boxplot
+heatmap
+시각화 실무 가이드라인","BRFSS 데이터로 성별, 당뇨병 여부, 교육수준 분포를 countplot으로 보고, BMI/나이 분포를 히스토그램과 박스플롯으로 비교한다. 상관관계는 heatmap으로 확인한다. 마지막에는 좋은 제목, 축 라벨, 색상, 해석 문장을 정리한다.","resources/slides/데이터 분석 시작하기.pptx
+resources/documents/데이터 분석 시작하기.pdf","course/day03/notebooks/3일차_데이터시각화.ipynb
+섹션: Seaborn 통계 시각화 ~ 시각화 실무 가이드라인","수업 중 실습: 교육수준 빈도 그래프, 당뇨병 여부별 나이 분포, BMI 박스플롯, 상관관계 heatmap.",course/day03/notebooks/3일차_데이터시각화.ipynb,상관/분포 차이를 인과로 말하지 않게 주의. 그래프는 “그리기”보다 “읽기”까지 포함.
